@@ -67,10 +67,39 @@ model Venta {
 model Gasto {
   id        String   @id @default(cuid())
   concepto  String
-  monto     Decimal  
+  monto     Decimal
   categoria String?
   fecha     DateTime @default(now())
   createdAt DateTime @default(now())
 
   @@index([fecha])
+}
+
+enum EstadoLead {
+  AGENDADA
+  PRELLAMADA_HECHA
+  REALIZADA
+  CANCELADA
+  NO_SHOW
+  CERRADA
+  PENDIENTE_DECISION
+  DESCARTADA
+  DESCARTADA_FUTURO
+}
+
+model Lead {
+  id               String     @id @default(cuid())
+  nombre           String
+  telefono         String?
+  origen           String?
+  fechaLlamada     DateTime?
+  prellamadaHecha  Boolean    @default(false)
+  estado           EstadoLead @default(AGENDADA)
+  fechaSeguimiento DateTime?
+  notas            String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  @@index([estado])
+  @@index([fechaLlamada])
 }

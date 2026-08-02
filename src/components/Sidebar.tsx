@@ -8,11 +8,13 @@ import {
   ShoppingCart,
   Package,
   Receipt,
+  PhoneCall,
 } from "lucide-react";
 import clsx from "clsx";
 
 const links = [
   { href: "/", label: "Panel", icon: LayoutDashboard },
+  { href: "/llamadas", label: "Llamadas", icon: PhoneCall },
   { href: "/clientes", label: "Clientes", icon: Users },
   { href: "/ventas", label: "Ventas", icon: ShoppingCart },
   { href: "/productos", label: "Productos", icon: Package },
