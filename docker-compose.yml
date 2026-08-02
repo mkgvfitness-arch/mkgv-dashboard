@@ -1,0 +1,18 @@
+# Levanta una base de datos PostgreSQL local para desarrollo.
+# Uso: docker compose up -d
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: mkgv-dashboard-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mkgv
+      POSTGRES_PASSWORD: mkgv
+      POSTGRES_DB: mkgv_dashboard
+    ports:
+      - "5432:5432"
+    volumes:
+      - mkgv_dashboard_data:/var/lib/postgresql/data
+
+volumes:
+  mkgv_dashboard_data:

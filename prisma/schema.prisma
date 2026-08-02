@@ -1,0 +1,76 @@
+// Esquema de base de datos del panel de gestion MKGV.
+// Documentacion: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Cliente {
+  id        String   @id @default(cuid())
+  nombre    String
+  email     String?  @unique
+  telefono  String?
+  notas     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ventas Venta[]
+
+  @@index([nombre])
+}
+
+model Producto {
+  id          String   @id @default(cuid())
+  nombre      String
+  descripcion String?
+  precio      Decimal  
+  stock       Int      @default(0)
+  categoria   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  ventas Venta[]
+
+  @@index([nombre])
+}
+
+enum EstadoVenta {
+  PENDIENTE
+  PAGADA
+  CANCELADA
+}
+
+model Venta {
+  id         String      @id @default(cuid())
+  fecha      DateTime    @default(now())
+  cantidad   Int         @default(1)
+  precioUnit Decimal     
+  total      Decimal     
+  estado     EstadoVenta @default(PAGADA)
+  createdAt  DateTime    @default(now())
+
+  clienteId String
+  cliente   Cliente @relation(fields: [clienteId], references: [id])
+
+  productoId String
+  producto   Producto @relation(fields: [productoId], references: [id])
+
+  @@index([fecha])
+}
+
+model Gasto {
+  id        String   @id @default(cuid())
+  concepto  String
+  monto     Decimal  
+  categoria String?
+  fecha     DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@index([fecha])
+}
