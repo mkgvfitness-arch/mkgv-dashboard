@@ -63,7 +63,7 @@ export default async function DashboardPage() {
               {stats.ventasRecientes.length === 0 && (
                 <tr>
                   <td colSpan={5} className="px-5 py-6 text-center text-gray-400">
-                    Todavia no hay ventas. Ejecuta "npm run db:seed" para cargar datos de ejemplo.
+                    Todavia no hay ventas. Ejecuta 'npm run db:seed' para cargar datos de ejemplo.
                   </td>
                 </tr>
               )}
